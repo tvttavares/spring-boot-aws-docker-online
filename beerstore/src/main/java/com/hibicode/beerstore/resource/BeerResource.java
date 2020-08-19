@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hibicode.beerstore.model.Beer;
 import com.hibicode.beerstore.repository.Beers;
+import com.hibicode.beerstore.service.BeerService;
 
 @RestController
 @RequestMapping("/beers")
@@ -20,6 +21,9 @@ public class BeerResource {
 
 	@Autowired
 	private Beers beers;
+
+	@Autowired
+	private BeerService beerService;
 
 	@GetMapping
 	public List<Beer> all() {
@@ -29,7 +33,7 @@ public class BeerResource {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Beer create(@RequestBody Beer beer) {
-		return beers.save(beer);
+		return beerService.save(beer);
 	}
 
 }

@@ -3,6 +3,8 @@ package com.hibicode.beerstore.model;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +31,7 @@ public class Beer {
 	private String name;
 
 	@NotNull(message = "beers-2")
+	//@Enumerated(EnumType.STRING)
 	private BeerType type;
 
 	@NotNull(message = "beers-3")
