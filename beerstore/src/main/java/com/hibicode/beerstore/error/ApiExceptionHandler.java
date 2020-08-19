@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -63,6 +65,15 @@ public class ApiExceptionHandler {
 
 		final ErrorResponse errorResponse = ErrorResponse.of(status, toApiError(errorCode, locale));
 		return ResponseEntity.badRequest().body(errorResponse);
+	}
+
+	@ExceptionHandler(EntityNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleNotFoundException(Locale locale) {
+		final String errorCode = "beers-6";
+		final HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+		final ErrorResponse errorResponse = ErrorResponse.of(httpStatus, toApiError(errorCode, locale));
+
+		return ResponseEntity.status(httpStatus).body(errorResponse);
 	}
 
 	public ApiError toApiError(String code, Locale locale, Object... args) {

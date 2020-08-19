@@ -2,6 +2,8 @@ package com.hibicode.beerstore.service;
 
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +20,28 @@ public class BeerService {
 	}
 
 	public Beer save(final Beer beer) {
-		Optional<Beer> beerByNameAndType = beers.findByNameAndType(beer.getName(), beer.getType());
-
-		if (beerByNameAndType.isPresent()) {
-			throw new BeerAlreadyExistException();
-		}
-
+		verifyIfBeerExists(beer);
 		return beers.save(beer);
 	}
 
+	private void verifyIfBeerExists(final Beer beer) {
+		Optional<Beer> beerByNameAndType = beers.findByNameAndType(beer.getName(), beer.getType());
+
+		if (beerByNameAndType.isPresent() && (beer.isNew() || isUpdatingToADifferentBeer(beer, beerByNameAndType))) {
+			throw new BeerAlreadyExistException();
+		}
+	}
+
+	private boolean isUpdatingToADifferentBeer(Beer beer, Optional<Beer> beerByNameAndType) {
+		return beer.alreadyExist() && !beerByNameAndType.get().equals(beer);
+	}
+
+	public void delete(Long id) {
+		Optional<Beer> beerOptional = beers.findById(id);
+		if (!beerOptional.isPresent()) {
+			throw new EntityNotFoundException();
+		}
+
+		beers.delete(beerOptional.get());
+	}
 }

@@ -7,6 +7,8 @@ import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -64,6 +66,30 @@ public class BeerServiceTest {
 		assertThat(beerSaved.getId(), equalTo(10L));
 		assertThat(beerSaved.getName(), equalTo("Heineken"));
 		assertThat(beerSaved.getType(), equalTo(BeerType.LAGER));
+	}
+
+	@Test(expected = EntityNotFoundException.class)
+	public void delete_when_beer_not_exist() {
+		final Beer beerToUpdate = new Beer();
+		beerToUpdate.setId(5L);
+		beerToUpdate.setName("Heineken");
+		beerToUpdate.setType(BeerType.LAGER);
+		beerToUpdate.setVolume(new BigDecimal("355"));
+		when(beersMocked.findById(5L)).thenReturn(Optional.empty());
+
+		beerService.delete(5L);
+	}
+
+	@Test
+	public void delete_of_an_existing_beer_that_already_exist() {
+		final Beer beerInDatabase = new Beer();
+		beerInDatabase.setId(10L);
+		beerInDatabase.setName("Heineken");
+		beerInDatabase.setType(BeerType.LAGER);
+		beerInDatabase.setVolume(new BigDecimal("355"));
+		when(beersMocked.findById(10L)).thenReturn(Optional.of(beerInDatabase));
+
+		beerService.delete(10L);
 	}
 
 }
