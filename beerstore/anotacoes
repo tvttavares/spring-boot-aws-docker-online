@@ -1,0 +1,45 @@
+-- Instalando o docker no UBUNTU
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+sudo apt update
+apt-cache policy docker-ce
+sudo apt install docker-ce
+sudo systemctl status docker
+
+-- Rodando o Postgres no Docker
+-- https://hub.docker.com/_/postgres
+docker run -p 5432:5432 --name beerdb -e POSTGRES_USER=beerstore -e POSTGRES_PASSWORD=beerstore -e POSTGRES_DB=beerstore -d postgres:12.4-alpine
+
+-- Mostrando imagens em execução
+docker ps 
+docker ps -a
+docker stop beerdb
+docker start beerdb
+
+-- Instalação do lombok
+-- https://projectlombok.org/
+
+-- Instalando Terraform
+wget https://releases.hashicorp.com/terraform/0.13.0/terraform_0.13.0_linux_amd64.zip
+unzip terraform_0.12.24_linux_amd64.zip
+sudo mv terraform_0.12.24_linux_amd64 /usr/local/bin
+rm terraform_0.12.24_linux_amd64.zip
+
+-- Instalando o AWL CLI
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+-- Configurando a AWS CLI
+aws configure --profile terraform
+
+cat .aws/credentials
+
+-- Inicializacao do terraform (vindo do diretorio do arquivo main.tg)
+terraform init
+
+
+-- Provisionando a VPC
+terraform apply
