@@ -43,3 +43,12 @@ terraform init
 
 -- Provisionando a VPC
 terraform apply
+
+-- Gerando chave privada/publica
+ssh-keygen -t rsa -b 4096 -o -a 100 -f key/beerstore_key
+
+-- Ip externo
+curl -s ipinfo.io/ip
+
+-- Destruindo o ambiente
+terraform destroy

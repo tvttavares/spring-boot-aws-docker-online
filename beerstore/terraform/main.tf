@@ -1,5 +1,6 @@
 provider "aws" {
-	version = "~> 3.3.0"
-	shared_credentials_file = "~/.aws/credentials"
-	profile = "terraform"
+  version                 = "~> 3.3.0"
+  shared_credentials_file = "~/.aws/credentials"
+  profile                 = "terraform"
+  region                  = "us-east-1"
 }

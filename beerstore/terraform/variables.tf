@@ -1,7 +1,8 @@
-variavle "availability_zones" {
-    default = [
-        "us-eat-1a",
-        "us-eat-1b",
-        "us-eat-1c"
-    ]
+variable "availability_zones" {
+  default = [
+    "us-east-1a",
+    "us-east-1b",
+    "us-east-1c"
+  ]
 }
+
