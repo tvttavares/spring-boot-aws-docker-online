@@ -36,3 +36,5 @@ out/
 ### Terraform ###
 /terraform/.terraform/
 /terraform/key/
+
+senha.txt

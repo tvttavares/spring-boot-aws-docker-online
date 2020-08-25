@@ -73,3 +73,19 @@ docker image ls
 
 docker run -p 8080:8080 tvttavares/beerstore:0.1
 
+docker network create beer-net
+
+docker network ls
+
+docker network connect beer-net beerdb
+
+docker run -p 8080:8080 --nertowr beer-net tvttavares/beerstore:0.1
+docker run -p 8080:8080 --rm --network beer-net -e APP_OPTIONS='--spring.datasource.url=jdbc:postgresql://beerdb:5432/beerstore' tvttavares/beerstore:0.1
+ 
+
+-- Enviando para o repositorio remoto
+docker login --username usnm --password pass
+cat senha.txt | docker login --username usnm --password-stdin
+
+
+
