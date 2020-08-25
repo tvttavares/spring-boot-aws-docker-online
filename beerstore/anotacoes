@@ -52,3 +52,24 @@ curl -s ipinfo.io/ip
 
 -- Destruindo o ambiente
 terraform destroy
+
+------ Teste ------
+-- Criando a imagem Docker
+docker build -t ubuntu-nginx .
+sudo docker images ls
+
+-- Executando a imagem docker
+docker run -d -p 8000:80 ubuntu-nginx
+-------- ------ ------
+
+-- Buildando o projeto graddle
+./gradlew build
+
+docker build -t tvttavares/beerstore:0.1 .
+
+docker run -p tvttavares/beerstore:0.1 .
+
+docker image ls
+
+docker run -p 8080:8080 tvttavares/beerstore:0.1
+
