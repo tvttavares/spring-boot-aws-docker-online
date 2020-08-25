@@ -14,6 +14,10 @@ module "rds" {
   password = "beerstore"
   port     = "5432"
 
+  # option_group_name = "db"
+  # create_db_parameter_group = false
+  # parameter_group_name      = "existing-parameter-group-name"
+
   vpc_security_group_ids = ["${aws_security_group.database.id}"]
 
   maintenance_window = "Thu:03:30-Thu:05:30"

@@ -6,3 +6,4 @@ variable "availability_zones" {
   ]
 }
 
+variable "my_public_ip" {}

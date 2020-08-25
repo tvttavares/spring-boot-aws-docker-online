@@ -87,5 +87,19 @@ docker run -p 8080:8080 --rm --network beer-net -e APP_OPTIONS='--spring.datasou
 docker login --username usnm --password pass
 cat senha.txt | docker login --username usnm --password-stdin
 
+-- Installing Ansible
+
+-- Pegando ip
+curl -s ipinfo.io/ip
+
+chmod a+x run-terraform.sh
+
+-- Inicializando o playbook
+ansible-playbook -i ../terraform/hosts --private-key ../terraform/key/beerstore_key beerstore-playbook.yml
+
+./run-ansible.sh
+
+sudo docker service create --name beerstore -e
 
 
+sudo docker service create --name beerstore -e SPRING_DATASOURCE_URL=jdbc:postgresql://URL_DO_RDS_DA_SUA_CONTA:5432/beerstore -p 8080:8080 --network service <NOME_IMAGEM>:<VERSAO>
